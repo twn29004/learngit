@@ -42,9 +42,25 @@
 
 到这我们就学会了如何使用github来进程版本控制了，下面介绍一些新内容
 再记录一下关于git中区的介绍:
- - git add是将工作区的文件保存再暂存区
- - git commit是将暂存区中的文件放到版本库中
- - git push可以将版本库中的文件存在远程服务仓库中
- - git pull可以从远程仓库中下载相应的文件
- - git diff可以查看工作区和暂存区文件的差异
- - git status可以查看工作区文件的情况
+ - `git add`是将工作区的文件保存再暂存区
+ - `git commit`是将暂存区中的文件放到版本库中
+ - `git push`可以将版本库中的文件存在远程服务仓库中
+ - `git pull`可以从远程仓库中下载相应的文件
+ - `git diff`可以查看工作区和暂存区文件的差异
+ - `git status`可以查看工作区文件的情况
+ - `git diff HEAD -- README.md`可以查看当前工作区与版本库中最新版本的区别
+
+ 4. 然后介绍一些其他的命令
+  - `git chechout -- file_name`可以将工作区的文件撤回到最近一次`git add`或者`git commit`的状态，回顾一下前面的三大分区的内容，`git add`表示的是暂存区的内容，`git commit`表示版本库的内容。`--`表示的是分支，这个之后再介绍。
+  - `git reset HEAD file_name`可以把暂存区的修改撤销掉。就是你可以把执行`git add`命令之后的修改撤销回工作区
+     *咦~,这段好迷，再议再议*
+  - `git rm`可以删除一个文件，如果一个文件已经提交到版本库了，永远不担心误删，但是**只能恢复到文件的最新版本**，你会丢失**最近一次提交后你修改的内容。**，那么误删了之后怎么恢复呢。`git checkout -- README.md`就ok了。听说在新版本的Git中`git checkout`被`git restore`替代了。
+
+  5. 连接远程仓库
+    1. 到目前为止，我们的代码都还是保存在本地的那么怎么推送给远程仓库呢，首先我们应该让github的服务器知道我是我，这就需要我们生成一个密钥了。使用如下命令`ssh-keygem -t rsa -C youremail@email.com`后面就是你注册github的邮箱，然后就可以一路回车了，然后你就可以在用户的目录下发现一个.ssh文件夹，里面有两个文件，一个是公共密钥，一个是私有密钥，公共密钥可以放心的告诉别人，但是应该保存好私有密钥。
+    2. 生成好密钥之后，我们可以登录github网站，点击头像下方发Setting,找打ssh and GPGkeys，new sshkey，将生成的公共密钥粘贴到里面(随便起一个title,eg:家里电脑的ssh),以上我们便连接上了github的服务器。
+    3. 然后在github上创建一个仓库(repository)。这里我将该仓库命名为learngit
+    4. 使用`git remote add origin git@github.com:twn29004/learngit.git`在本地运行该命令，连接你新建的仓库。twn29004为你注册的用户名,同时远程仓库的名字被命名为`origin`，当然也可以改成其他的
+    5. `git push -u origin master`将本地文件上传至远程仓库,由于第一次推送`master`分支，加上`-u`参数，Git不但会把本地的`master`分支内容推送到远程仓库的新的`master`分支，还会把本地的`master`分支与远程的`master`分支关联起来，以后的推送就可以只用`git push origin master`
+
+6. 将远程仓库克隆到本地。`git clone git@github.com:user_name/git_name.git`
