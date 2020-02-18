@@ -69,5 +69,7 @@
 关于分支的介绍可以参考[廖雪峰老师的教程](https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424),下面介绍一些分支的常用命令:
 - `git checkout -b dev` `git checkout`命令加上`-b`表示创建并切换分支，相当于这两条命令`git branch dev`,`git checkout dev`.
 - `git branch`会列出所有的分支，并在当前分支前标`*`
-
-
+- `git merge branch_name`将名为branch_name的分支与当前分支合并
+- `git branch -d branch_name`将名为branch_name的分支删除
+- 补充，由于前面讲到的撤销操作的命令也是`git checkout -- file_name`，这就很迷惑了，Git还有一种切换分支的命令为`git switch branch_name`,`gti switch -c branch_name`,创建并切换
+最后，Git鼓励大量使用分支！
