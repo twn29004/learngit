@@ -56,11 +56,18 @@
      *咦~,这段好迷，再议再议*
   - `git rm`可以删除一个文件，如果一个文件已经提交到版本库了，永远不担心误删，但是**只能恢复到文件的最新版本**，你会丢失**最近一次提交后你修改的内容。**，那么误删了之后怎么恢复呢。`git checkout -- README.md`就ok了。听说在新版本的Git中`git checkout`被`git restore`替代了。
 
-  5. 连接远程仓库
+5. 连接远程仓库
     1. 到目前为止，我们的代码都还是保存在本地的那么怎么推送给远程仓库呢，首先我们应该让github的服务器知道我是我，这就需要我们生成一个密钥了。使用如下命令`ssh-keygem -t rsa -C youremail@email.com`后面就是你注册github的邮箱，然后就可以一路回车了，然后你就可以在用户的目录下发现一个.ssh文件夹，里面有两个文件，一个是公共密钥，一个是私有密钥，公共密钥可以放心的告诉别人，但是应该保存好私有密钥。
     2. 生成好密钥之后，我们可以登录github网站，点击头像下方发Setting,找打ssh and GPGkeys，new sshkey，将生成的公共密钥粘贴到里面(随便起一个title,eg:家里电脑的ssh),以上我们便连接上了github的服务器。
     3. 然后在github上创建一个仓库(repository)。这里我将该仓库命名为learngit
     4. 使用`git remote add origin git@github.com:twn29004/learngit.git`在本地运行该命令，连接你新建的仓库。twn29004为你注册的用户名,同时远程仓库的名字被命名为`origin`，当然也可以改成其他的
     5. `git push -u origin master`将本地文件上传至远程仓库,由于第一次推送`master`分支，加上`-u`参数，Git不但会把本地的`master`分支内容推送到远程仓库的新的`master`分支，还会把本地的`master`分支与远程的`master`分支关联起来，以后的推送就可以只用`git push origin master`
 
-6. 将远程仓库克隆到本地。`git clone git@github.com:user_name/git_name.git`
+6. 将远程仓库克隆到本地。`git clone git@github.com:user_name/git_name.git`,也可以使用git提供的连接进行Clone.`git clone url`,这里github提供了多种协议，git协议和https协议。如果想使用git协议可以在CloneorDownloag那点击use ssh连接就会变为git协议。听说git协议更快一点.补充(windos中查看文件目录下所有文件的名字的命令为`dir ./b`)
+
+7. 下面是除了仓库外，github中的另一个东西------Branch(分支)，分支的功能相当于一个岔路，嗯，可以这么说，举个例子，你现在已经有了一个完整的项目，项目是可以正常运作的。但是你现在想新添加一些功能。但是这个新功能不是很快就可以添加的，所以，如果你要修改新功能的话，现有的项目就不能正常运行了。这个时候`Branch`的好处就体现出来了，你可以新建一个分支，然后她并不影响你原有的项目，你也可以高兴的添加新功能，当你新功能添加完成后，还可以合并两个分支。
+关于分支的介绍可以参考[廖雪峰老师的教程](https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424),下面介绍一些分支的常用命令:
+- `git checkout -b dev` `git checkout`命令加上`-b`表示创建并切换分支，相当于这两条命令`git branch dev`,`git checkout dev`.
+- `git branch`会列出所有的分支，并在当前分支前标`*`
+
+
