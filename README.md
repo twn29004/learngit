@@ -20,8 +20,6 @@
 
 - 首先我们可以使用`git log`命令查看变更日志，执行该条命令之后我们可以看到整个仓库的变更的历史,同时我们可以看到一个`commit id(版本号)`这个是你每次提交系统自动生成的，同时还可以看到你每次修改增加的备注，通过这些备注的说明你就可以决定自己要退回到哪个版本了，是不是有点像操作系统实验时有的同学用到的快照 \斜眼笑，同时我们还应该知道在Git中，`HEAD`表示当前版本，上一个版本是`HEAD^`，上上一个版本是`HEAD^^`，所以易得上一百个版本是`HEAD`+100个`^`，当然没这么蠢，可以写成`HEAD~100`
 
-    ![git log后的输出](F:\git\learngit\Snipaste_2020-02-18_19-39-08.png)
-
 - `git reset --hard commit_id的前六位`可以回退到指定的版本,注意那个`--hard`参数的意义，通过查阅网上的资料可以看出，这里可选的参数一共有三个，分别是`hard,soft,mixed`,分别代表不同的意义
 
     * hard 将最近一次提交节点的提交记录全部清除
@@ -38,12 +36,12 @@
     1.  如果你现在的命令窗口还没关的话，你可以直接`git reset  --hard commit_id前六位`，意思就是如果你能直接在当前的命令行窗口里面找到你要回退的版本的`commit_id`的话就可以直接回退回去了
     2.  当然如果你找不到的话，可以使用`git reflog`查看你的变更记录，在这个log里面你可以找到你的回退记录。同样使用如上命令进行回退。
     反正核心就是知道`commit_id`就可以回退到相应的版本
-- 我看网上教程还有一种使用`HEAD`的命令，但是自己试验并没有成功，这里还是介绍一下`git reset --hard HEAD^`，这个`HEAD^`就是上面介绍的含义
+- 我看网上教程还有一种使用`HEAD`的命令，但是自己试验并没有成功，这里还是介绍一下`git reset --hard HEAD^`，这个`HEAD^`就是上面介绍的含义。*补充：在官方文档看到了关于`HEAD`这个东西的一种使用方法，`git reset HEAD <file_name>`,可以取消暂存,至于前面那个命令，俺也⑧知道咋回事*
 
 到这我们就学会了如何使用github来进程版本控制了，下面介绍一些新内容
 再记录一下关于git中区的介绍:
  - `git add`是将工作区的文件保存再暂存区
- - `git commit`是将暂存区中的文件放到版本库中
+ - `git commit`是将暂存区中的文件放到版本库中，**养成好好写commit的习惯，非常重要，同时commit才是提交到版本库的最终操作**
  - `git push`可以将版本库中的文件存在远程服务仓库中
  - `git pull`可以从远程仓库中下载相应的文件
  - `git diff`可以查看工作区和暂存区文件的差异
@@ -51,17 +49,17 @@
  - `git diff HEAD -- README.md`可以查看当前工作区与版本库中最新版本的区别
 
  4. 然后介绍一些其他的命令
-  - `git chechout -- file_name`可以将工作区的文件撤回到最近一次`git add`或者`git commit`的状态，回顾一下前面的三大分区的内容，`git add`表示的是暂存区的内容，`git commit`表示版本库的内容。`--`表示的是分支，这个之后再介绍。
+  - `git chechout -- file_name`可以将工作区的文件撤回到最近一次`git add`或者`git commit`的状态，回顾一下前面的三大分区的内容，`git add`表示的是暂存区的内容，`git commit`表示版本库的内容。`--`表示的是分支，这个之后再介绍。看到官方文档的一句话:**你需要清楚的知道该命令是一个危险的命令，你对文件做的任何修改都会消失，你只是拷贝了一个文件来覆盖他**
   - `git reset HEAD file_name`可以把暂存区的修改撤销掉。就是你可以把执行`git add`命令之后的修改撤销回工作区
-     *咦~,这段好迷，再议再议*
+     *咦~,这段好迷，再议再议，不妨自己试试*，
   - `git rm`可以删除一个文件，如果一个文件已经提交到版本库了，永远不担心误删，但是**只能恢复到文件的最新版本**，你会丢失**最近一次提交后你修改的内容。**，那么误删了之后怎么恢复呢。`git checkout -- README.md`就ok了。听说在新版本的Git中`git checkout`被`git restore`替代了。
 
 5. 连接远程仓库
     1. 到目前为止，我们的代码都还是保存在本地的那么怎么推送给远程仓库呢，首先我们应该让github的服务器知道我是我，这就需要我们生成一个密钥了。使用如下命令`ssh-keygem -t rsa -C youremail@email.com`后面就是你注册github的邮箱，然后就可以一路回车了，然后你就可以在用户的目录下发现一个.ssh文件夹，里面有两个文件，一个是公共密钥，一个是私有密钥，公共密钥可以放心的告诉别人，但是应该保存好私有密钥。
     2. 生成好密钥之后，我们可以登录github网站，点击头像下方发Setting,找打ssh and GPGkeys，new sshkey，将生成的公共密钥粘贴到里面(随便起一个title,eg:家里电脑的ssh),以上我们便连接上了github的服务器。
     3. 然后在github上创建一个仓库(repository)。这里我将该仓库命名为learngit
-    4. 使用`git remote add origin git@github.com:twn29004/learngit.git`在本地运行该命令，连接你新建的仓库。twn29004为你注册的用户名,同时远程仓库的名字被命名为`origin`，当然也可以改成其他的
-    5. `git push -u origin master`将本地文件上传至远程仓库,由于第一次推送`master`分支，加上`-u`参数，Git不但会把本地的`master`分支内容推送到远程仓库的新的`master`分支，还会把本地的`master`分支与远程的`master`分支关联起来，以后的推送就可以只用`git push origin master`
+    4. 使用`git remote add origin git@github.com:twn29004/git_name.git`解释一下这个命令，增加名叫`origin`的远程仓库，同时与在github上创建的名为`git_name`的仓库关联起来，其他的都是固定的貌似(暂时的理解是这样) 
+    6. `git push -u origin master`将本地文件上传至远程仓库,由于第一次推送`master`分支，加上`-u`参数，Git不但会把本地的`master`分支内容推送到远程仓库的新的`master`分支，还会把本地的`master`分支与远程的`master`分支关联起来，以后的推送就可以只用`git push origin master`
 
 6. 将远程仓库克隆到本地。`git clone git@github.com:user_name/git_name.git`,也可以使用git提供的连接进行Clone.`git clone url`,这里github提供了多种协议，git协议和https协议。如果想使用git协议可以在CloneorDownloag那点击use ssh连接就会变为git协议。听说git协议更快一点.补充(windos中查看文件目录下所有文件的名字的命令为`dir ./b`)
 
