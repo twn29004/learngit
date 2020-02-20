@@ -56,12 +56,12 @@
       git add forgttoen_file
       git commit --amend
     ```
-  - `git chechout -- file_name`可以将工作区的文件撤回到最近一次`git add`或者`git commit`的状态，回顾一下前面的三大分区的内容，`git add`表示的是暂存区的内容，`git commit`表示版本库的内容。`--`表示的是分支，这个之后再介绍。看到官方文档的一句话:**你需要清楚的知道该命令是一个危险的命令，你对文件做的任何修改都会消失，你只是拷贝了一个文件来覆盖他**
+  - `git chechout -- file_name`可以将工作区的文件撤回到最近一次`git add`或者`git commit`的状态，回顾一下前面的三大分区的内容，`git add`表示的是暂存区的内容，`git commit`表示版本库的内容。`--`表示的是分支，这个之后再介绍。看到官方文档的一句话:**你需要清楚的知道该命令是一个危险的命令，你对文件做的任何修改都会消失，你只是拷贝了一个文件来覆盖他**,听说新版的已经将`checkout替换为resotre`,
   - `git reset HEAD file_name`其作用是撤销暂存。如果在调用的时候加上`--hard`将让`git reset`成为一个危险的命令，**可能导致当前工作目录所有当前进度丢失**，不加选项的调`git reset`并不危险，他只会**修改暂存区域，不会修改工作区**。emmm,如果这里不懂的的话，可以自己这样操作一下，先add一个文件，使用`git status`查看当前仓库的状态。可以看到文件已经被暂存了，然后在使用这条命令，再执行`git status`可以看到文件变为未暂存了。emmm,我试了一下，就是虽然取消了暂存，但是不会将工作区的内容撤回到上一次`git add`的内容，只是将状态改变为`unstage`
-  - `git rm`可以删除一个文件，如果一个文件已经提交到版本库了，永远不担心误删，但是**只能恢复到文件的最新版本**，你会丢失**最近一次提交后你修改的内容。**，那么误删了之后怎么恢复呢。`git checkout -- README.md`就ok了。听说在新版本的Git中`git checkout`被`git restore`替代了。
+  - 一般我们删除文件都是直接在文件管理器中删除，这时使用`git status`,这是Git将会告诉你有文件被删除了，因为工作区与版本库不一致了，这时你有两种选择，一个是确实要从版本库中删除，这时可以使用`git rm`删除这个文件，并且要`commit`,如果这是误删,可以使用`git checkout file_name`,从版本库中恢复。如果一个文件已经提交到版本库了，永远不担心误删，但是**只能恢复到文件的最新版本**，你会丢失**最近一次提交后你修改的内容。**，那么误删了之后怎么恢复呢。`git checkout -- README.md`就ok了。听说在新版本的Git中`git checkout`被`git restore`替代了。
   - **记住在Git中，你提交的所有东西几乎都是可以恢复的，但是未提交的就不一定能找回来了**
-  - 补充:执行`git status`时，会顺带输出一些恢复操作的命令
-  
+  - 补充:执行`git status`时，会顺带输出一些恢复操作的命令,eg`git restore <file>` to discard changes in working directory.`git restore --staged <file>` to unstaged
+  - 这里分享一个看到的问题，就是先`git add`一个文件，修改之后再`git add`，中间没有`git commit`,然后再`git commit`，此时版本库中是最近一次的文件。原因是`git add`是将文件加入跟踪列表，而每一次跟踪是以commit为准的。
 
 5. 连接远程仓库
     1. 到目前为止，我们的代码都还是保存在本地的那么怎么推送给远程仓库呢，首先我们应该让github的服务器知道我是我，这就需要我们生成一个密钥了。使用如下命令`ssh-keygem -t rsa -C youremail@email.com`后面就是你注册github的邮箱，然后就可以一路回车了，然后你就可以在用户的目录下发现一个.ssh文件夹，里面有两个文件，一个是公共密钥，一个是私有密钥，公共密钥可以放心的告诉别人，但是应该保存好私有密钥。
@@ -80,4 +80,4 @@
 - `git branch -d branch_name`将名为branch_name的分支删除
 - 补充，由于前面讲到的撤销操作的命令也是`git checkout -- file_name`，这就很迷惑了，Git还有一种切换分支的命令为`git switch branch_name`,`gti switch -c branch_name`,创建并切换
 最后，Git鼓励大量使用分支！
-补充:在提交的过程中出现了一个这样的错误`nothing added to commit but untracked files present`,意思就是还有未提交文件的存在。如果不想提交这些文件，可以新建一个`.gitignore`将不需要提交的文件加在里面，如果需要提交的话就一一提交就ok了[参考连接](https://blog.csdn.net/qq_40170358/article/details/79866936)
+- 补充:在提交的过程中出现了一个这样的错误`nothing added to commit but untracked files present`,意思就是还有未提交文件的存在。如果不想提交这些文件，可以新建一个`.gitignore`将不需要提交的文件加在里面，如果需要提交的话就一一提交就ok了[参考连接](https://blog.csdn.net/qq_40170358/article/details/79866936)
