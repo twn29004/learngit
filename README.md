@@ -70,15 +70,20 @@
     4. 使用`git remote add origin git@github.com:twn29004/git_name.git`解释一下这个命令，增加名叫`origin`的远程仓库，同时与在github上创建的名为`git_name`的仓库关联起来，其他的都是固定的貌似(暂时的理解是这样) 
     6. `git push -u origin master`将本地文件上传至远程仓库,由于第一次推送`master`分支，加上`-u`参数，Git不但会把本地的`master`分支内容推送到远程仓库的新的`master`分支，还会把本地的`master`分支与远程的`master`分支关联起来，以后的推送就可以只用`git push origin master`
 
-6. 将远程仓库克隆到本地。`git clone git@github.com:user_name/git_name.git`,也可以使用git提供的连接进行Clone.`git clone url`,这里github提供了多种协议，git协议和https协议。如果想使用git协议可以在CloneorDownloag那点击use ssh连接就会变为git协议。听说git协议更快一点.补充(windos中查看文件目录下所有文件的名字的命令为`dir ./b`)
+6. 将远程仓库克隆到本地。`git clone git@github.com:user_name/git_name.git`,也可以使用git提供的连接进行Clone.`git clone url`,这里github提供了多种协议，git协议和https协议。如果想使用git协议可以在CloneorDownloag那点击use ssh连接就会变为git协议。听说git协议更快一点.补充(windos中查看文件目录下所有文件的名字的命令为`dir ./b`),需要特别注意的是，**这里的是用户名，不是你注册的邮箱，是你注册的用户名**
 
 7. 下面是除了仓库外，github中的另一个东西------Branch(分支)，分支的功能相当于一个岔路，嗯，可以这么说，举个例子，你现在已经有了一个完整的项目，项目是可以正常运作的。但是你现在想新添加一些功能。但是这个新功能不是很快就可以添加的，所以，如果你要修改新功能的话，现有的项目就不能正常运行了。这个时候`Branch`的好处就体现出来了，你可以新建一个分支，然后她并不影响你原有的项目，你也可以高兴的添加新功能，当你新功能添加完成后，还可以合并两个分支。
 关于分支的介绍可以参考[廖雪峰老师的教程](https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424),下面介绍一些分支的常用命令:
 - `git checkout -b dev` `git checkout`命令加上`-b`表示创建并切换分支，相当于这两条命令`git branch dev`,`git checkout dev`.
 - `git branch`会列出所有的分支，并在当前分支前标`*`
-- `git merge branch_name`将名为branch_name的分支与当前分支合并
-- `git branch -d branch_name`将名为branch_name的分支删除
+- `git merge branch_name`将名为branch_name的分支与当前分支合并，如果分支存在冲突，我们将手动处理冲突。
+- `git branch -d branch_name`将名为branch_name的分支删除，**不能删除自己正在的那个分支，不能自己杀自己嘛**
+- `git log --graph`可以查看分支合并图。
 - 补充，由于前面讲到的撤销操作的命令也是`git checkout -- file_name`，这就很迷惑了，Git还有一种切换分支的命令为`git switch branch_name`,`gti switch -c branch_name`,创建并切换
 最后，Git鼓励大量使用分支！
 - 补充:在提交的过程中出现了一个这样的错误`nothing added to commit but untracked files present`,意思就是还有未提交文件的存在。如果不想提交这些文件，可以新建一个`.gitignore`将不需要提交的文件加在里面，如果需要提交的话就一一提交就ok了[参考连接](https://blog.csdn.net/qq_40170358/article/details/79866936)
+<<<<<<< HEAD
 dwiedjowckdd
+=======
+Create branch is simple & quick
+>>>>>>> test
