@@ -1,6 +1,12 @@
 # github学习历程
-1. 首先我们要知道github是干什么的，github是一个版本控制工具，可以记录你每次提交的code的变化的情况，嗯，大概就是这样。
-2. 一下是github几个常用的命令：
+## github的作用   
+
+首先我们要知道github是干什么的，github是一个版本控制工具，可以记录你每次提交的code的变化的情况，嗯，大概就是这样。
+
+---
+
+## 一些常用命令  
+
 - git init 新建一个空的仓库
 - git status 查看仓库的状态
 - git add + file 向仓库中添加文件
@@ -14,12 +20,15 @@
 - git merge branch_name 将名叫branch_namde的分支合并到当前的分支上
 - git pull origin master 将master分支的内容拉到本地
 - git diff file_name 可以查看文件的变化
-3. 关于变更版本的操作
+
+--- 
+
+## 关于版本的变更操作  
 [关于版本链接变更的几个命令的介绍](https://www.jianshu.com/p/09dbd8dc7345)
 - 当我们想回退到某个版本的时候，应该怎么操作，在Git中，head表示当i当前的版本，或者回到以前的版本又想回到现在的版本怎么办
-
 - 首先我们可以使用`git log`命令查看变更日志，执行该条命令之后我们可以看到整个仓库的变更的历史,同时我们可以看到一个`commit id(版本号)`这个是你每次提交系统自动生成的，同时还可以看到你每次修改增加的备注，通过这些备注的说明你就可以决定自己要退回到哪个版本了，是不是有点像操作系统实验时有的同学用到的快照 \斜眼笑，同时我们还应该知道在Git中，`HEAD`表示当前版本，上一个版本是`HEAD^`，上上一个版本是`HEAD^^`，所以易得上一百个版本是`HEAD`+100个`^`，当然没这么蠢，可以写成`HEAD~100`
-
+    以下是我执行gitlog之后的截图:
+    ![3e5Wfx.png](https://s2.ax1x.com/2020/02/20/3e5Wfx.png)
 - `git reset --hard commit_id的前六位`可以回退到指定的版本,注意那个`--hard`参数的意义，通过查阅网上的资料可以看出，这里可选的参数一共有三个，分别是`hard,soft,mixed`,分别代表不同的意义
 
     * hard 将最近一次提交节点的提交记录全部清除
@@ -27,9 +36,9 @@
     * soft 将最近一次提交节点的提交记录回退到暂存区
 
     * mixed 将最近一次提交节点的提交记录回退到工作区
-      下面放一张关于github三个分区的说明图
+    下面放一张关于github三个分区的说明图
 
-      ![git的三个区](F:\git\learngit\git的三个区.png)这个要好好理解一下，就可以很好的理解git中大多数命令的含义，这里再贴一个链接
+      ![github的三个区](https://s2.ax1x.com/2020/02/20/3e59F1.png)这个要好好理解一下，就可以很好的理解git中大多数命令的含义，这里再贴一个链接
       [关于git中区的介绍](https://www.liaoxuefeng.com/wiki/896043488029600/897271968352576)
 
 - 如果回到以前的版本之后还想回到原来的版本怎么办呢，有下面两种情况
@@ -48,8 +57,9 @@
  - `git status`可以查看工作区文件的情况
  - `git diff HEAD -- README.md`可以查看当前工作区与版本库中最新版本的区别
 
- 4. 关于撤销操作的命令
+---
 
+ ## 关于撤销操作的命令
  - 如果我们提交之后发现漏掉了几个文件没有添加，或者提交信息写错了，可以使用`git commit --amend`重新提交,如果是漏掉了文件，可以这样操作
     ```
       git commit -m 'initial commit'
@@ -63,27 +73,52 @@
   - 补充:执行`git status`时，会顺带输出一些恢复操作的命令,eg`git restore <file>` to discard changes in working directory.`git restore --staged <file>` to unstaged
   - 这里分享一个看到的问题，就是先`git add`一个文件，修改之后再`git add`，中间没有`git commit`,然后再`git commit`，此时版本库中是最近一次的文件。原因是`git add`是将文件加入跟踪列表，而每一次跟踪是以commit为准的。
 
-5. 连接远程仓库
-    1. 到目前为止，我们的代码都还是保存在本地的那么怎么推送给远程仓库呢，首先我们应该让github的服务器知道我是我，这就需要我们生成一个密钥了。使用如下命令`ssh-keygem -t rsa -C youremail@email.com`后面就是你注册github的邮箱，然后就可以一路回车了，然后你就可以在用户的目录下发现一个.ssh文件夹，里面有两个文件，一个是公共密钥，一个是私有密钥，公共密钥可以放心的告诉别人，但是应该保存好私有密钥。
-    2. 生成好密钥之后，我们可以登录github网站，点击头像下方发Setting,找打ssh and GPGkeys，new sshkey，将生成的公共密钥粘贴到里面(随便起一个title,eg:家里电脑的ssh),以上我们便连接上了github的服务器。
-    3. 然后在github上创建一个仓库(repository)。这里我将该仓库命名为learngit
-    4. 使用`git remote add origin git@github.com:twn29004/git_name.git`解释一下这个命令，增加名叫`origin`的远程仓库，同时与在github上创建的名为`git_name`的仓库关联起来，其他的都是固定的貌似(暂时的理解是这样) 
-    6. `git push -u origin master`将本地文件上传至远程仓库,由于第一次推送`master`分支，加上`-u`参数，Git不但会把本地的`master`分支内容推送到远程仓库的新的`master`分支，还会把本地的`master`分支与远程的`master`分支关联起来，以后的推送就可以只用`git push origin master`
+---
+
+## 连接远程仓库
+  1. 到目前为止，我们的代码都还是保存在本地的那么怎么推送给远程仓库呢，首先我们应该让github的服务器知道我是我，这就需要我们生成一个密钥了。使用如下命令`ssh-keygem -t rsa -C youremail@email.com`后面就是你注册github的邮箱，然后就可以一路回车了，然后你就可以在用户的目录下发现一个.ssh文件夹，里面有两个文件，一个是公共密钥，一个是私有密钥，公共密钥可以放心的告诉别人，但是应该保存好私有密钥。  
+
+
+  2. 生成好密钥之后，我们可以登录github网站，点击头像下方发Setting,找打ssh and GPGkeys，new sshkey，将生成的公共密钥粘贴到里面(随便起一个title,eg:家里电脑的ssh),以上我们便连接上了github的服务器。  
+
+  3. 然后在github上创建一个仓库(repository)。这里我将该仓库命名为learngit
+  4. 使用`git remote add origin git@github.com:twn29004/git_name.git`解释一下这个命令，增加名叫`origin`的远程仓库，同时与在github上创建的名为`git_name`的仓库关联起来，其他的都是固定的貌似(暂时的理解是这样) 
+  6. `git push -u origin master`将本地文件上传至远程仓库,由于第一次推送`master`分支，加上`-u`参数，Git不但会把本地的`master`分支内容推送到远程仓库的新的`master`分支，还会把本地的`master`分支与远程的`master`分支关联起来，以后的推送就可以只用`git push origin master`
 
 6. 将远程仓库克隆到本地。`git clone git@github.com:user_name/git_name.git`,也可以使用git提供的连接进行Clone.`git clone url`,这里github提供了多种协议，git协议和https协议。如果想使用git协议可以在CloneorDownloag那点击use ssh连接就会变为git协议。听说git协议更快一点.补充(windos中查看文件目录下所有文件的名字的命令为`dir ./b`),需要特别注意的是，**这里的是用户名，不是你注册的邮箱，是你注册的用户名**
 
-7. 下面是除了仓库外，github中的另一个东西------Branch(分支)，分支的功能相当于一个岔路，嗯，可以这么说，举个例子，你现在已经有了一个完整的项目，项目是可以正常运作的。但是你现在想新添加一些功能。但是这个新功能不是很快就可以添加的，所以，如果你要修改新功能的话，现有的项目就不能正常运行了。这个时候`Branch`的好处就体现出来了，你可以新建一个分支，然后她并不影响你原有的项目，你也可以高兴的添加新功能，当你新功能添加完成后，还可以合并两个分支。
-关于分支的介绍可以参考[廖雪峰老师的教程](https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424),下面介绍一些分支的常用命令:
-- `git checkout -b dev` `git checkout`命令加上`-b`表示创建并切换分支，相当于这两条命令`git branch dev`,`git checkout dev`.
-- `git branch`会列出所有的分支，并在当前分支前标`*`
-- `git merge branch_name`将名为branch_name的分支与当前分支合并，如果分支存在冲突，我们将手动处理冲突。
-- `git branch -d branch_name`将名为branch_name的分支删除，**不能删除自己正在的那个分支，不能自己杀自己嘛**
-- `git log --graph`可以查看分支合并图。
-- 补充，由于前面讲到的撤销操作的命令也是`git checkout -- file_name`，这就很迷惑了，Git还有一种切换分支的命令为`git switch branch_name`,`gti switch -c branch_name`,创建并切换
-最后，Git鼓励大量使用分支！
-- 补充:在提交的过程中出现了一个这样的错误`nothing added to commit but untracked files present`,意思就是还有未提交文件的存在。如果不想提交这些文件，可以新建一个`.gitignore`将不需要提交的文件加在里面，如果需要提交的话就一一提交就ok了[参考连接](https://blog.csdn.net/qq_40170358/article/details/79866936)
-<<<<<<< HEAD
-dwiedjowckdd
-=======
-Create branch is simple & quick
->>>>>>> test
+---
+
+## 关于Branch
+   
+   下面是除了仓库外，github中的另一个东西------Branch(分支)，分支的功能相当于一个岔路，嗯，可以这么说，举个例子，你现在已经有了一个完整的项目，项目是可以正常运作的。但是你现在想新添加一些功能。但是这个新功能不是很快就可以添加的，所以，如果你要修改新功能的话，现有的项目就不能正常运行了。这个时候`Branch`的好处就体现出来了，你可以新建一个分支，然后她并不影响你原有的项目，你也可以高兴的添加新功能，当你新功能添加完成后，还可以合并两个分支关于分支的介绍可以参考[廖雪峰老师的教程](https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424),Branch可以分为这几类，Bug分支，feature分支(功能分支)下面介绍一些分支的常用命令:  
+
+   
+   - `git checkout -b dev` `git checkout`命令加上`-b`表示创建并切换分支，相当于这两条命令`git branch dev`,`git checkout dev`.
+   - `git branch`会列出所有的分支，并在当前分支前标`*`
+   - `git merge branch_name`将名为branch_name的分支与当前分支合并，如果分支存在冲突，我们将手动处理冲突。
+   - `git branch -d branch_name`将名为branch_name的分支删除，**不能删除自己正在的那个分支，不能自己杀自己嘛**
+   - `git log --graph`可以查看分支合并图。
+   - 补充，由于前面讲到的撤销操作的命令也是`git checkout -- file_name`，这就很迷惑了，Git还有一种切换分支的命令为`git switch branch_name`,`gti switch -c branch_name`,创建并切换
+   - 合并分支时，Git会适应`Fast firward`模式，但是这个模式，删除分支之后，会丢掉分支细腻些，如果禁用`Fast forward`，Git就会在merge时生成一个新的commit，这样就可以从分支历史上看到这些信息。其方法是`git merge --no-ff -m "comimit说明" merge_name`
+   最后，Git鼓励大量使用分支！
+   -  补充:在提交的过程中出现了一个这样的错误`nothing added to commit but untracked files present`,意思就是还有未提交文件的存在。如果不想提交这些文件，可以新建一个`.gitignore`将不需要提交的文件加在里面，如果需要提交的话就一一提交就ok了[参考连接](https://blog.csdn.net/qq_40170358/article/details/79866936)
+   - 关于分支策略，一般`aster`应该是非常稳定的，而其他分支是不稳定的。
+   - bug分支，举个例子，就是当你在建一个新功能时，不巧，另一个分支上出现了bug,但是你现在的工作又没结束，不能提交，但是bug又急需处理，这是可以使用`git stash`来保存工作现场。然后去处理BUG,处理完之后怎么回到刚才的。可以使用`git stash list`查看，然后有以下几种方法来恢复工作区的文件   
+        1. 使用`git stash apply`恢复，但是恢复后stash的内容不删除，可以使用`git stach drop`来删除
+        2. 使用`git stash pop`恢复的同时把stash的内容也删除了
+        3. 如果多次stash,可以使用`git stash list`查看，然后使用`git stash apply stash@{num}`
+        4. ****关于这个的说明，`git stash`不能将未跟踪的文件压栈，什么是未跟踪的文件，emmm，就是你新建的文件或者文件夹，还没有被`add`过。也就是`Untracked file`
+        5. 如果要丢弃一个没有合并过的分支，可以使用`git branch -D <name>`进行强制删除，但是，删除了就没了~
+        6. 多人协作的工作模式同常时这样的(摘自[聊学分的教程](https://www.liaoxuefeng.com/wiki/896043488029600/900375748016320))    
+            1. 首先试图用`git push origin <branch_name>`;
+            2. 如果推送失败，则因为远程的分支比本地的更新，可以先`git pull`试图合并
+            3. 如果合并失败，则解决冲突并在本地提交;
+            4. 没有冲突或者解决掉冲突就能推送成功
+        ps: 在本地创建和远程分支对应的分支，使用`git checkout -b branch_name origin_name`,建立本地分支与远程分支的关联`git branch --set-upstream branch_name origin/branch-name`
+
+---
+
+## 关于标签
+
+   标签嘛，很好理解，就是一串人能记住的数字且为了方便查阅而存在的，Git中也有标签，Git的标签是指向commit的。
