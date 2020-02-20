@@ -81,3 +81,4 @@
 - 补充，由于前面讲到的撤销操作的命令也是`git checkout -- file_name`，这就很迷惑了，Git还有一种切换分支的命令为`git switch branch_name`,`gti switch -c branch_name`,创建并切换
 最后，Git鼓励大量使用分支！
 - 补充:在提交的过程中出现了一个这样的错误`nothing added to commit but untracked files present`,意思就是还有未提交文件的存在。如果不想提交这些文件，可以新建一个`.gitignore`将不需要提交的文件加在里面，如果需要提交的话就一一提交就ok了[参考连接](https://blog.csdn.net/qq_40170358/article/details/79866936)
+dwiedjowckdd
