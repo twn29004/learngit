@@ -121,4 +121,9 @@
 
 ## 关于标签
 
-   标签嘛，很好理解，就是一串人能记住的数字且为了方便查阅而存在的，Git中也有标签，Git的标签是指向commit的。
+   标签嘛，很好理解，就是一串人能记住的数字且为了方便查阅而存在的，Git中也有标签，Git的标签是指向commit的。类似于分支，但是分支可以移动，标签不行。
+   git打标签非常简单.首先切换到需要打标签的分支上`git switch branch_name`,然后执行命令`git tag v1.0`,`v1.0`即为标签名，也可以使用`git tag`查看标签，如果需要给以前的commit打标签，使用`git log`查看对应的`commit id`，然后使用命令`git tag v0.9 commit_id`,注意：`git tag`给出的顺序不是按你打标签的时间顺序，而是按字母的排列顺序，还可以创建带说明的标签`git tag -a tag_name -m 说明 commit_id`,`git show tag_name`可以查看标签说明。
+   关于`git push`中标签的说明，一般`git push`是不会将标签上传到远程仓库的，需要使用`git push origin tag_name`.如果要一次性推送很多标签，可以使用命令`git push origin --tags`,要删除标签可以使用`git tag -d tag_name`.
+
+---
+至此，我们应该对这个版本控制工具有了一个比较好的认识了。希望大家用的愉快！
